@@ -2134,7 +2134,7 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b)
             DOMURL.revokeObjectURL(png);
             triggerDownload(png);
         };
-        img.src = 'blob:localhost:8080/2fc40932-a315-421d-a0ba-176056e31966';
+        img.src = url;
     }
     else
     {
