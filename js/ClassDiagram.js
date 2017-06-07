@@ -25,7 +25,7 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 	 	this.addEntry(dt + 'object instance', function()
 		{
 			var cell = new mxCell('Classname', new mxGeometry(0, 0, 160, 90),
-		    	'swimlane;html=1;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#DAE8FC;componentName=Class;');
+		    	'swimlane;html=1;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#DAE8FC;componentName=class;');
 			cell.vertex = true;
 			cell.insert(attributeField.clone());
 			cell.insert(divider.clone());
@@ -44,19 +44,16 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 		this.createVertexTemplateEntry('text;html=1;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;',
 			80, 26, 'Title', 'Title', null, null, dt + 'title label'),
 		
-		this.addEntry(dt + 'object instance', function()
+	 	this.addEntry(dt + 'object instance', function()
 		{
-		    var cell = new mxCell('<p style="margin:0px;margin-top:4px;text-align:center;">' +
-	    			'<i>&lt;&lt;Interface&gt;&gt;</i><br/><b>Interface</b></p>' +
-					'<hr size="1"/><p style="margin:0px;margin-left:4px;">+ field1: Type<br/>' +
-					'+ field2: Type</p>' +
-					'<hr size="1"/><p style="margin:0px;margin-left:4px;">' +
-					'+ method1(Type): Type<br/>' +
-					'+ method2(Type, Type): Type</p>', new mxGeometry(0, 0, 190, 140),
-					'verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;');
-		    cell.vertex = true;
+			var cell = new mxCell('<i>&lt;&lt;Interface&gt;&gt;</i><br/> Interface', new mxGeometry(0, 0, 190, 90),
+		    	'swimlane;html=1;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#DAE8FC;componentName=interface;');
+			cell.vertex = true;
+			cell.insert(attributeField.clone());
+			cell.insert(divider.clone());
+			cell.insert(methodField.clone());
 			
-			return sb.createVertexTemplateFromCells([cell.clone()], cell.geometry.width, cell.geometry.height, 'Interface 2');
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Interface'); 
 		}),
 		
 		this.addEntry('uml aggregation', function()

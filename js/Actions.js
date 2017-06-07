@@ -79,6 +79,7 @@ Actions.prototype.init = function()
 		ui.showDialog(dlg.container, 620, 420, true, true);
 		dlg.init();
 	});
+	this.addAction('generateCode...', function() { ui.showDialog(new GenerateCodeDialog(ui).container, 300, 230, true, true); });
 	this.addAction('pageSetup...', function() { ui.showDialog(new PageSetupDialog(ui).container, 320, 220, true, true); }).isEnabled = isGraphEnabled;
 	this.addAction('print...', function() { ui.showDialog(new PrintDialog(ui).container, 300, 180, true, true); }, null, 'sprite-print', 'Ctrl+P');
 	this.addAction('preview', function() { mxUtils.show(graph, null, 10, 10); });
