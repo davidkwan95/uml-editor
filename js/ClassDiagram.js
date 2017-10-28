@@ -10,17 +10,17 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 	var field = new mxCell('+ field: type', new mxGeometry(0, 0, 100, 26), 'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;');
 	var attributeField = new mxCell('+ field: type', new mxGeometry(0, 0, 100, 26), 'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;componentName=attribute');
 	var methodField = new mxCell('+ method(type): type', new mxGeometry(0, 0, 100, 26), 'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;componentName=method');
-	
+
 	field.vertex = true;
 	attributeField.vertex = true;
 	methodField.vertex = true;
 
 	var divider = new mxCell('', new mxGeometry(0, 0, 40, 8), 'line;html=1;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;');
 	divider.vertex = true;
-	
+
 	// Default tags
 	var dt = 'uml static class ';
-	
+
 	var fns = [
 	 	this.addEntry(dt + 'object instance', function()
 		{
@@ -30,8 +30,8 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 			cell.insert(attributeField.clone());
 			cell.insert(divider.clone());
 			cell.insert(methodField.clone());
-			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class'); 
+
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class');
 		}),
 		this.addEntry(dt + 'item member method function variable field attribute label', function()
 		{
@@ -43,7 +43,7 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 		}),
 		this.createVertexTemplateEntry('text;html=1;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;',
 			80, 26, 'Title', 'Title', null, null, dt + 'title label'),
-		
+
 	 	this.addEntry(dt + 'object instance', function()
 		{
 			var cell = new mxCell('<i>&lt;&lt;Interface&gt;&gt;</i><br/> Interface', new mxGeometry(0, 0, 190, 90),
@@ -52,10 +52,10 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 			cell.insert(attributeField.clone());
 			cell.insert(divider.clone());
 			cell.insert(methodField.clone());
-			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Interface'); 
+
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Interface');
 		}),
-		
+
 		this.addEntry('uml aggregation', function()
 		{
 			var edge = new mxCell('1', new mxGeometry(0, 0, 0, 0), 'endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=bottom;');
@@ -65,7 +65,7 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 			edge.geometry.x = -1;
 			edge.geometry.y = 3;
 			edge.edge = true;
-		
+
 			return sb.createEdgeTemplateFromCells([edge], 160, 0, 'Aggregation');
 		}),
 		this.addEntry('uml composition', function()
@@ -77,11 +77,11 @@ Sidebar.prototype.addClassDiagramPalette = function(expand)
 			edge.geometry.x = -1;
 			edge.geometry.y = 3;
 			edge.edge = true;
-			
+
 			return sb.createEdgeTemplateFromCells([edge], 160, 0, 'Composition');
 		}),
-		this.createEdgeTemplateEntry('endArrow=block;endSize=16;endFill=0;html=1;', 160, 0, 'Extends', 'Generalization', null, 'uml generalization extend'),
+		this.createEdgeTemplateEntry('endArrow=block;endSize=16;endFill=0;html=1;componentName=generalization;', 160, 0, 'Extends', 'Generalization', null, 'uml generalization extend'),
 	];
-	
+
 	this.addPaletteFunctions('classDiagram', mxResources.get('classDiagram'), expand || false, fns);
 };

@@ -16,25 +16,25 @@
 		{
 			var result = new Object();
 			var idx = url.lastIndexOf('?');
-	
+
 			if (idx > 0)
 			{
 				var params = url.substring(idx + 1).split('&');
-				
+
 				for (var i = 0; i < params.length; i++)
 				{
 					idx = params[i].indexOf('=');
-					
+
 					if (idx > 0)
 					{
 						result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
 					}
 				}
 			}
-			
+
 			return result;
 		})(window.location.href);
-	
+
 		mxBasePath = 'js/mxgraph/src';
 
 		// Default resources are included in grapheditor resources
@@ -56,6 +56,7 @@
 	<script type="text/javascript" src="js/Dialogs/Dialogs.js"></script>
 	<script type="text/javascript" src="js/Dialogs/GenerateCodeDialog.js"></script>
 	<script type="text/javascript" src="js/Generator/Generator.js"></script>
+	<script type="text/javascript" src="js/Generator/Parser.js"></script>
 	<script type="text/javascript" src="js/Save.js"></script>
 	<script type="text/javascript" src="js/Exporter.js"></script>
 	<script type="text/javascript" src="js/ClassDiagram.js"></script>
@@ -67,7 +68,7 @@
 		(function()
 		{
 			var editorUiInit = EditorUi.prototype.init;
-			
+
 			EditorUi.prototype.init = function()
 			{
 				editorUiInit.apply(this, arguments);
@@ -89,7 +90,7 @@
 					}));
 				}
 			};
-			
+
 			// Adds required resources (disables loading of fallback properties, this can only
 			// be used if we know that all keys are defined in the language specific file)
 			mxResources.loadDefaultBundle = false;
@@ -101,11 +102,11 @@
 			{
 				// Adds bundle text to resources
 				mxResources.parse(xhr[0].getText());
-				
+
 				// Configures the default graph theme
 				var themes = new Object();
-				themes[Graph.prototype.defaultThemeName] = xhr[1].getDocumentElement(); 
-				
+				themes[Graph.prototype.defaultThemeName] = xhr[1].getDocumentElement();
+
 				// Main
 				new EditorUi(new Editor(urlParams['chrome'] == '0', themes));
 			}, function()
