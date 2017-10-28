@@ -24,7 +24,7 @@ Generator.prototype.generateCode = function() {
     // If code is generated, prompt download file
     if (code) {
         this.saveCode(fileName, code);
-        editorUi.hideDialog();
+        editor.hideDialog();
     }
 
 }
@@ -35,38 +35,74 @@ Generator.prototype.generateCodeJava = function() {
     for (var key in list) {
         if (list.hasOwnProperty(key)) {
             str += this.generateStringFromClassElement(list[key]);
-            str += '\n\n';
         }
     }
     return str;
+}
+
+
+/** ============== Generate Class Element String ================================ */
+ClassTemplateGenerator = function(className, attributesStr, methodsStr) {
+    this.className = className;
+    this.attributesStr = attributesStr;
+    this.methodsStr = methodsStr;
+    this.generate = function() {
+        return (
+`\
+class ${this.className} {
+${this.attributesStr}
+${this.methodsStr}
+}
+
+`
+        );
+    }
+}
+
+InterfaceTemplateGenerator = function(interfaceName, attributesStr, methodsStr) {
+    this.interfaceName = interfaceName;
+    this.attributesStr = attributesStr;
+    this.methodsStr = methodsStr;
+    this.generate = function() {
+        return (
+`\
+interface ${this.interfaceName} {
+${this.attributesStr}
+${this.methodsStr}
+}
+
+`
+        );
+    }
+}
+
+ClassElementGeneratorFactory = function(element) {
+    var attributesStr = Generator.prototype.generateStringAttribute(element);
+    var methodsStr = Generator.prototype.generateStringMethod(element);
+
+    if (element.type === 'class') {
+         var className = element.className;
+         return new ClassTemplateGenerator(className, attributesStr, methodsStr);
+    }
+    if (element.type === 'interface') {
+        var interfaceName = element.interfaceName;
+        return new InterfaceTemplateGenerator(interfaceName, attributesStr, methodsStr);
+    }
 }
 
 Generator.prototype.generateStringFromClassElement = function(element) {
     var attributesStr = this.generateStringAttribute(element);
     var methodsStr = this.generateStringMethod(element);
 
-    var str = '';
-    if (element.type === 'class') {
-        var className = element.className;
-
-        str +=
-`\
-class ${className} {
-${attributesStr}
-${methodsStr}
-}\
-`;
-    }
-    else if (element.type === 'interface') {
-        var interfaceName = element.interfaceName;
-        str += `interface ${interfaceName} {\n${attributesStr}\n${methodsStr}\n}\n`;
-    }
+    var str = ClassElementGeneratorFactory(element).generate();
     return str;
 }
+/** ============== END Generate Class Element String ================================ */
+
 
 /** ============== Generate Class Attributes String ================================ */
 Generator.prototype.generateStringAttributeTemplate = function(scopeName, attribute) {
-    return `    ${scopeName} ${attribute.type} ${attribute.attributeName}\n`
+    return `    ${scopeName} ${attribute.type} ${attribute.attributeName};\n`
 }
 
 Generator.prototype.generateStringAttribute = function(element) {
