@@ -49,7 +49,7 @@ Generator.prototype.generateStringFromClassElement = function(element) {
     if (element.type === 'class') {
         var className = element.className;
 
-        str += 
+        str +=
 `\
 class ${className} {
 ${attributesStr}
@@ -64,68 +64,67 @@ ${methodsStr}
     return str;
 }
 
+/** ============== Generate Class Attributes String ================================ */
+Generator.prototype.generateStringAttributeTemplate = function(scopeName, attribute) {
+    return `    ${scopeName} ${attribute.type} ${attribute.attributeName}\n`
+}
+
 Generator.prototype.generateStringAttribute = function(element) {
     var attributesStr = '';
 
     for (var i = 0; i < element.privateAttributes.length; i++) {
         var attribute = element.privateAttributes[i];
-        attributesStr += `  private ${attribute.type} ${attribute.attributeName}\n`;
+        attributesStr += this.generateStringAttributeTemplate('private', attribute);
     }
     for (var i = 0; i < element.publicAttributes.length; i++) {
         var attribute = element.publicAttributes[i];
-        attributesStr += `  public ${attribute.type} ${attribute.attributeName}\n`;
+        attributesStr += this.generateStringAttributeTemplate('public', attribute);
     }
     for (var i = 0; i < element.protectedAttributes.length; i++) {
         var attribute = element.protectedAttributes[i];
-        attributesStr += `  protected ${attribute.type} ${attribute.attributeName}\n`;
+        attributesStr += this.generateStringAttributeTemplate('protected', attribute);
     }
 
     return attributesStr;
+}
+/** ============== END Generate Class Attributes String ================================ */
+
+
+
+/** ============== Generate Class Method String ================================ */
+Generator.prototype.generateMethodTemplate = function(methodScopeName, method) {
+    return (
+`\
+    ${methodScopeName} ${method.returnType} ${method.methodName} {
+        /* insert code here */
+    }
+
+`
+    );
 }
 
 Generator.prototype.generateStringMethod = function(element) {
     var methodsStr = '';
 
-// ================== TEMPLATE FOR PRIVATE METHODS =============================
     for (var i = 0; i < element.privateMethods.length; i++) {
         var method = element.privateMethods[i];
-        methodsStr += 
-`\
-    private ${method.returnType} ${method.methodName} {
-        /* insert code here */
+        methodsStr += this.generateMethodTemplate('private', method);
     }
 
-`
-    }
-// ================== END TEMPLATE FOR PRIVATE METHODS =============================
-
-// ================== TEMPLATE FOR PUBLIC METHODS =============================
     for (var i = 0; i < element.publicMethods.length; i++) {
         var method = element.publicMethods[i];
-        methodsStr += 
-`\
-    public ${method.returnType} ${method.methodName} {
-        /* insert code here */
+        methodsStr += this.generateMethodTemplate('public', method);
     }
 
-`
-    }
-// ================== END TEMPLATE FOR PUBLIC METHODS =============================
-
-// ================== TEMPLATE FOR PROTECTED METHODS =============================
     for (var i = 0; i < element.protectedMethods.length; i++) {
         var method = element.protectedMethods[i];
-        methodsStr += 
-`\
-    protected ${method.returnType} ${method.methodName} {
-        /* insert code here */
+        methodsStr += this.generateMethodTemplate('protected', method);
     }
 
-`
-    }
-// ================== END TEMPLATE FOR PROTECTD METHODS =============================
     return methodsStr;
 }
+/** ============== END Generate Class Method String ================================ */
+
 
 Generator.prototype.parseXmlToclassAndInterfaceList = function(xml) {
     var mxCells = xml.getElementsByTagName("mxCell");
@@ -229,7 +228,7 @@ Generator.prototype.getComponentNameFromStyle = function(style) {
         componentName = elements[index].split('=')[1];
     }
     return componentName;
-} 
+}
 
 Generator.prototype.saveCode = function(fileName, code) {
     var data = new Blob([code], {type: 'text/plain'});
