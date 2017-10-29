@@ -6,21 +6,50 @@ var MethodStrategy = strategies.MethodStrategy;
 var GeneralizationStrategy = strategies.GeneralizationStrategy;
 
 var Parser = function() {
+  this.elements = {};
   this.classAndInterfaceLists = {};
+  this.generalizationList = [];
 }
 
 Parser.prototype.parseXmlToclassAndInterfaceList = function(xml) {
+  var parser = this;
+
   var mxCells = xml.getElementsByTagName("mxCell");
 
   // Remove the first 2 because they are the canvas elements
   for (var id = 2; id < mxCells.length; id++) {
       var mxCell = mxCells[id];
-      var style = mxCell.getAttribute('style');
-      var componentName = this.getComponentNameFromStyle(style);
+      var componentName = parser.getComponentNameFromCell(mxCell);
       if (componentName) {
           this.doAction(mxCell, componentName);
+          this.elements[id] = mxCell;
       }
   }
+
+  // normalize the generalizationLists
+  this.generalizationList = this.generalizationList.map(function(el) {
+    var newSource = parser.getAttributeOrMethodParent(el.source);
+    var newTarget = parser.getAttributeOrMethodParent(el.target);
+
+    return {source: newSource, target: newTarget};
+  })
+
+  // merge the generalizationLists to classAndInterfaceLists
+  for (id in this.generalizationList) {
+    var element = this.generalizationList[id];
+    var targetCell = this.elements[element.target];
+    var targetCellId = targetCell.getAttribute('id');
+    var targetComponentName = this.getComponentNameFromCell(targetCell);
+
+    if (targetComponentName === 'class') {
+      var targetClassName = this.classAndInterfaceLists[targetCellId].className;
+      this.classAndInterfaceLists[element.source].extends.push(targetClassName);
+    } else if (targetComponentName === 'interface') {
+      var targetInterfaceName = this.classAndInterfaceLists[targetCellId].interfaceName;
+      this.classAndInterfaceLists[element.source].implements.push(targetInterfaceName);
+    }
+  }
+
   return this.classAndInterfaceLists;
 }
 
@@ -113,6 +142,27 @@ Parser.prototype.pushMethod = function(mxCell) {
   }
 }
 
+Parser.prototype.pushGeneralization = function(mxCell) {
+  var source = mxCell.getAttribute('source');
+  var target = mxCell.getAttribute('target');
+  this.generalizationList.push({source: source, target: target});
+}
+
+/** Most of the time, the generalization arrow is gonna connect to an attribute
+ * or method. If it happens, we are gonna change it to the parent
+ */
+Parser.prototype.getAttributeOrMethodParent = function(elementId) {
+  var mxCell = this.elements[elementId];
+  var parentId = mxCell.getAttribute('parent');
+
+  // parentId == 1 is the root. if it is 1, it means it is not class/interface
+  // else, we return the parentId;
+  if (parentId === "1") {
+    return elementId;
+  }
+  return parentId
+}
+
 Parser.prototype.getComponentNameFromStyle = function(style) {
   var elements = style.split(';');
   var index = -1;
@@ -126,6 +176,11 @@ Parser.prototype.getComponentNameFromStyle = function(style) {
       componentName = elements[index].split('=')[1];
   }
   return componentName;
+}
+
+Parser.prototype.getComponentNameFromCell = function(mxCell) {
+  var style = mxCell.getAttribute('style');
+  return this.getComponentNameFromStyle(style);
 }
 
 module.exports = Parser;

@@ -19,8 +19,7 @@ Generator.prototype.generateCode = function() {
     this.classAndInterfaceLists = parser.parseXmlToclassAndInterfaceList(xml);
     console.log(this.classAndInterfaceLists);
     var code = '';
-    if (language == 'java')
-    {
+    if (language == 'java') {
         code = this.generateCodeJava();
     }
 
@@ -46,14 +45,16 @@ Generator.prototype.generateCodeJava = function() {
 
 
 /** ============== Generate Class Element String ================================ */
-ClassTemplateGenerator = function(className, attributesStr, methodsStr) {
+ClassTemplateGenerator = function(className, attributesStr, methodsStr, extendsStr, implementsStr) {
     this.className = className;
     this.attributesStr = attributesStr;
     this.methodsStr = methodsStr;
+    this.extendsStr = extendsStr;
+    this.implementsStr = implementsStr;
     this.generate = function() {
         return (
 `\
-class ${this.className} {
+class ${this.className}${this.extendsStr}${this.implementsStr} {
 ${this.attributesStr}
 ${this.methodsStr}
 }
@@ -83,10 +84,12 @@ ${this.methodsStr}
 ClassElementGeneratorFactory = function(element) {
     var attributesStr = Generator.prototype.generateStringAttribute(element);
     var methodsStr = Generator.prototype.generateStringMethod(element);
+    var extendsStr = Generator.prototype.generateStringExtends(element);
+    var implementsStr = Generator.prototype.generateStringImplements(element);
 
     if (element.type === 'class') {
          var className = element.className;
-         return new ClassTemplateGenerator(className, attributesStr, methodsStr);
+         return new ClassTemplateGenerator(className, attributesStr, methodsStr, extendsStr, implementsStr);
     }
     if (element.type === 'interface') {
         var interfaceName = element.interfaceName;
@@ -163,6 +166,34 @@ Generator.prototype.generateStringMethod = function(element) {
     return methodsStr;
 }
 /** ============== END Generate Class Method String ================================ */
+
+/** ============== Generate Implements List ======================================== */
+Generator.prototype.generateStringImplements = function(element) {
+    var separator = ',';
+    var implements = element.implements;
+    console.log(implements);
+    if (implements.length) {
+        var implementString = implements.join(', ').trim();
+        return ` implements ${implementString}`;
+    }
+    return '';
+}
+/** ============== END Generate Implements List ===================================== */
+
+/** ============== Generate Extends List ======================================== */
+
+// Java can only extend one class.
+// TODO: Throw error if extending more than one class
+Generator.prototype.generateStringExtends = function(element) {
+    var separator = ',';
+    var extendsList = element.extends;
+    if (extendsList.length) {
+        var extendsString = extendsList[0];
+        return ` extends ${extendsString}`;
+    }
+    return '';
+}
+/** ============== END Generate Extends List ===================================== */
 
 
 Generator.prototype.saveCode = function(fileName, code) {

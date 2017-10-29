@@ -31,9 +31,7 @@ var GeneralizationStrategy = function() {};
 GeneralizationStrategy.prototype = new Handler();
 GeneralizationStrategy.prototype.handleRequest = function(parser, mxCell, componentName) {
   if (componentName === 'generalization') {
-    console.log('mulai susah wkwkwkwk');
-    return;
-    // return parser.pushGeneralization(mxCell);
+    return parser.pushGeneralization(mxCell);
   }
   return this.next.handleRequest(parser, mxCell, componentName);
 }
