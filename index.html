@@ -35,31 +35,27 @@
 			return result;
 		})(window.location.href);
 
-		mxBasePath = 'js/mxgraph/src';
+		mxBasePath = 'js/**globals**/mxgraph/src';
 
 		// Default resources are included in grapheditor resources
 		mxLoadResources = false;
-	</script>
-	<script type="text/javascript" src="js/Init.js"></script>
-	<script type="text/javascript" src="js/jscolor/jscolor.js"></script>
-	<script type="text/javascript" src="js/sanitizer/sanitizer.min.js"></script>
-	<script type="text/javascript" src="js/mxgraph/mxClient.js"></script>
-	<script type="text/javascript" src="js/EditorUi.js"></script>
-	<script type="text/javascript" src="js/Editor.js"></script>
-	<script type="text/javascript" src="js/Sidebar.js"></script>
-	<script type="text/javascript" src="js/Graph.js"></script>
-	<script type="text/javascript" src="js/Shapes.js"></script>
-	<script type="text/javascript" src="js/Actions.js"></script>
-	<script type="text/javascript" src="js/Menus.js"></script>
-	<script type="text/javascript" src="js/Format.js"></script>
-	<script type="text/javascript" src="js/Toolbar.js"></script>
-	<script type="text/javascript" src="js/Dialogs/Dialogs.js"></script>
-	<script type="text/javascript" src="js/Dialogs/GenerateCodeDialog.js"></script>
-	<script type="text/javascript" src="js/Generator/Generator.js"></script>
-	<script type="text/javascript" src="js/Generator/Parser.js"></script>
-	<script type="text/javascript" src="js/Save.js"></script>
-	<script type="text/javascript" src="js/Exporter.js"></script>
-	<script type="text/javascript" src="js/ClassDiagram.js"></script>
+		</script>
+	<script type="text/javascript" src="js/**globals**/Init.js"></script>
+	<script type="text/javascript" src="js/**globals**/jscolor/jscolor.js"></script>
+	<script type="text/javascript" src="js/**globals**/sanitizer/sanitizer.min.js"></script>
+	<script type="text/javascript" src="js/**globals**/mxgraph/mxClient.js"></script>
+	<script type="text/javascript" src="js/**globals**/Editor.js"></script>
+	<script type="text/javascript" src="js/**globals**/Graph.js"></script>
+	<script type="text/javascript" src="js/**globals**/Shapes.js"></script>
+	<script type="text/javascript" src="js/**globals**/Format.js"></script>
+
+	<script type="text/javascript" src="js/src/Dialogs/Dialogs.js"></script>
+	<script type="text/javascript" src="js/src/Dialogs/GenerateCodeDialog.js"></script>
+	<script type="text/javascript" src="js/src/Generator/Generator.js"></script>
+	<script type="text/javascript" src="js/src/Generator/Parser.js"></script>
+	<script type="text/javascript" src="js/src/Exporter.js"></script>
+
+	<script type="text/javascript" src="js/build/bundle.js"></script>
 
 </head>
 <body class="geEditor">

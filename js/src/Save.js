@@ -1,29 +1,29 @@
 /**
  * Adds the label menu items to the given menu and parent.
  */
-EditorUi.prototype.saveFile = function(forceDialog)
+var saveFile = function(ui, forceDialog)
 {
-	if (!forceDialog && this.editor.filename != null)
+	if (!forceDialog && ui.editor.filename != null)
 	{
-		this.save(this.editor.getOrCreateFilename());
+		ui.save(ui.editor.getOrCreateFilename());
 	}
 	else
 	{
-		var dlg = new FilenameDialog(this, this.editor.getOrCreateFilename(), mxResources.get('save'), mxUtils.bind(this, function(name)
+		var dlg = new FilenameDialog(ui, ui.editor.getOrCreateFilename(), mxResources.get('save'), mxUtils.bind(ui, function(name)
 		{
-			this.save(name);
-		}), null, mxUtils.bind(this, function(name)
+			save(ui, name);
+		}), null, mxUtils.bind(ui, function(name)
 		{
 			if (name != null && name.length > 0)
 			{
 				return true;
 			}
-			
+
 			mxUtils.confirm(mxResources.get('invalidName'));
-			
+
 			return false;
 		}));
-		this.showDialog(dlg.container, 300, 100, true, true);
+		ui.showDialog(dlg.container, 300, 100, true, true);
 		dlg.init();
 	}
 };
@@ -31,16 +31,16 @@ EditorUi.prototype.saveFile = function(forceDialog)
 /**
  * Saves the current graph under the given filename.
  */
-EditorUi.prototype.save = function(name)
+var save = function(ui, name)
 {
 	if (name != null)
 	{
-		if (this.editor.graph.isEditing())
+		if (ui.editor.graph.isEditing())
 		{
-			this.editor.graph.stopEditing();
+			ui.editor.graph.stopEditing();
 		}
-		
-		var xml = mxUtils.getXml(this.editor.getGraphXml());
+
+		var xml = mxUtils.getXml(ui.editor.getGraphXml());
 		var textFile = null;
 		try
 		{
@@ -78,7 +78,7 @@ EditorUi.prototype.save = function(name)
 				}
 
 				localStorage.setItem(name, xml);
-				this.editor.setStatus(mxResources.get('saved') + ' ' + new Date());
+				ui.editor.setStatus(mxResources.get('saved') + ' ' + new Date());
 			}
 			else
 			{
@@ -91,18 +91,20 @@ EditorUi.prototype.save = function(name)
 				{
 					mxUtils.alert(mxResources.get('drawingTooLarge'));
 					mxUtils.popup(xml);
-					
+
 					return;
 				}
 			}
 
-			this.editor.setModified(false);
-			this.editor.setFilename(name);
-			this.updateDocumentTitle();
+			ui.editor.setModified(false);
+			ui.editor.setFilename(name);
+			ui.updateDocumentTitle();
 		}
 		catch (e)
 		{
-			this.editor.setStatus('Error saving file');
+			ui.editor.setStatus('Error saving file');
 		}
 	}
 };
+
+module.exports = saveFile;

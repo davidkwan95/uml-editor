@@ -1,0 +1,27 @@
+{
+  "name": "uml-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "watch": "watchify js/src/*.js -o js/build/bundle.js -dv",
+    "start": "npm run watch & python -m SimpleHTTPServer 8080",
+    "build": "browserify js/src/index.js | uglifyjs > js/build/bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidkwan95/uml-editor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidkwan95/uml-editor/issues"
+  },
+  "homepage": "https://github.com/davidkwan95/uml-editor#readme",
+  "dependencies": {
+    "browserify": "^14.5.0",
+    "uglify-js": "^3.1.5",
+    "watchify": "^3.9.0"
+  }
+}
