@@ -1,4 +1,4 @@
-var saveFiles = require('./Save.js');
+var saveFile = require('./Save.js');
 var ExportDialog = require('./Dialogs/ExportDialog');
 var GenerateCodeDialog = require('./Dialogs/GenerateCodeDialog');
 
