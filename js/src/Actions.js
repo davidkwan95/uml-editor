@@ -1,4 +1,5 @@
 var saveFiles = require('./Save.js');
+var GenerateCodeDialog = require('./Dialogs/GenerateCodeDialog');
 
 /**
  * Copyright (c) 2006-2012, JGraph Ltd

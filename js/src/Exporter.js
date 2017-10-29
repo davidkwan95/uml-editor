@@ -7,7 +7,7 @@
 ExportDialog.exportFile = function(editorUi, name, format, bg, s, b)
 {
     var graph = editorUi.editor.graph;
-    
+
     if (format == 'xml')
     {
         ExportDialog.saveLocalFile(editorUi, mxUtils.getXml(editorUi.editor.getGraphXml()), name, format);
@@ -39,10 +39,10 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b)
         var DOMURL = window.URL || window.webkitURL || window;
 
         var img = new Image();
-        img.crossOrigin = "anonymous";
-        var svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
-        var url = DOMURL.createObjectURL(svgBlob);
+        var url = "data:image/svg+xml;charset=utf-8," + svgString;
         img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
             var png = canvas.toDataURL("image/png");
             DOMURL.revokeObjectURL(png);
@@ -53,18 +53,18 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b)
     else
     {
         var bounds = graph.getGraphBounds();
-        
+
         // New image export
         var xmlDoc = mxUtils.createXmlDocument();
         var root = xmlDoc.createElement('output');
         xmlDoc.appendChild(root);
-        
+
         // Renders graph. Offset will be multiplied with state's scale when painting state.
         var xmlCanvas = new mxXmlCanvas2D(root);
         xmlCanvas.translate(Math.floor((b / s - bounds.x) / graph.view.scale),
             Math.floor((b / s - bounds.y) / graph.view.scale));
         xmlCanvas.scale(s / graph.view.scale);
-        
+
         var imgExport = new mxImageExport()
         imgExport.drawState(graph.getView().getState(graph.model.root), xmlCanvas);
 
@@ -72,7 +72,7 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b)
         var param = 'xml=' + encodeURIComponent(mxUtils.getXml(root));
         var w = Math.ceil(bounds.width * s / graph.view.scale + 2 * b);
         var h = Math.ceil(bounds.height * s / graph.view.scale + 2 * b);
-        
+
         // console.log(mxUtils.getXml(root));
 
         // Requests image if request is valid
