@@ -1,3 +1,5 @@
+var Parser = require('./helper/Parser');
+
 var Generator = function(editorUi, fileName, language) {
     this.editorUi = editorUi;
     this.fileName = fileName;
@@ -207,3 +209,5 @@ Generator.prototype.xmlStringToXml = function(xmlString) {
 
     return parseXml(xmlString);
 }
+
+module.exports = Generator;

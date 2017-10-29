@@ -21,7 +21,8 @@
   "homepage": "https://github.com/davidkwan95/uml-editor#readme",
   "dependencies": {
     "browserify": "^14.5.0",
-    "uglify-js": "^3.1.5",
+    "uglify-es": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
+    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "watchify": "^3.9.0"
   }
 }

@@ -1,3 +1,5 @@
+var Generator = require('../Generator/Generator');
+
 /**
  * Constructs a new Generate Code dialog.
    For examples to add languages, check ExportDialog class
@@ -72,7 +74,6 @@ var GenerateCodeDialog = function(editorUi)
         var language = languageSelect.value;
         var generator = new Generator(editorUi, name, language);
         generator.generateCode();
-        // ExportDialog.exportFile(editorUi, name, format, bg, s, b);
     }));
     saveBtn.className = 'geBtn gePrimaryBtn';
 
@@ -122,27 +123,5 @@ var GenerateCodeDialog = function(editorUi)
  * Remembers last value for border.
  */
 GenerateCodeDialog.lastBorderValue = 0;
-
-/**
- * Hook for getting the export format. Returns null for the default
- * intermediate XML export format or a function that returns the
- * parameter and value to be used in the request in the form
- * key=value, where value should be URL encoded.
- */
-GenerateCodeDialog.saveLocalFile = function(editorUi, data, filename, format)
-{
-    if (data.length < MAX_REQUEST_SIZE)
-    {
-        editorUi.hideDialog();
-        var req = new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
-            encodeURIComponent(filename) + '&format=' + format);
-        req.simulate(document, '_blank');
-    }
-    else
-    {
-        mxUtils.alert(mxResources.get('drawingTooLarge'));
-        mxUtils.popup(xml);
-    }
-};
 
 module.exports = GenerateCodeDialog;
