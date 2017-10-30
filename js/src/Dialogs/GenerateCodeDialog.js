@@ -1,4 +1,4 @@
-var Generator = require('../Generator/Generator');
+var GeneratorFactory = require('../Generator/GeneratorFactory');
 
 /**
  * Constructs a new Generate Code dialog.
@@ -72,8 +72,8 @@ var GenerateCodeDialog = function(editorUi)
     {
         var name = nameInput.value;
         var language = languageSelect.value;
-        var generator = new Generator(editorUi, name, language);
-        generator.generateCode();
+        var generator = new GeneratorFactory(editorUi, name, language).createGenerator();
+        generator.generateAndSave();
     }));
     saveBtn.className = 'geBtn gePrimaryBtn';
 
