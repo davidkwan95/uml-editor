@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "watch": "watchify js/index.js -o js/build/bundle.js -dv",
-    "start": "npm run watch & python -m SimpleHTTPServer 8080",
+    "start": "yarn run watch & python -m SimpleHTTPServer 8080",
     "build": "browserify js/index.js | uglifyjs > js/build/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,8 +19,12 @@
     "url": "https://github.com/davidkwan95/uml-editor/issues"
   },
   "homepage": "https://github.com/davidkwan95/uml-editor#readme",
-  "dependencies": {
+  "devDependencies": {
+    "babel-eslint": "^8.0.1",
     "browserify": "^14.5.0",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "uglify-es": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "watchify": "^3.9.0"
