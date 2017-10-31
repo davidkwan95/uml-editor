@@ -6,6 +6,21 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "mxCell": false,
+    "mxClient":false,
+    "mxConnectionHandler": false,
+    "mxConstants": false,
+    "mxEvent": false,
+    "mxEventObject": false,
+    "mxEventSource": false,
+    "mxGeometry": false,
+    "mxHierarchicalLayout": false,
+    "mxUtils": false,
+    "mxResources": false,
+    "mxPopupMenu": false,
+    "mxPoint": false
+  },
   "rules": {
     // Strict mode
     "strict": [2, "never"],
