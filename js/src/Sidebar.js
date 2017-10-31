@@ -1340,7 +1340,7 @@ Sidebar.prototype.createDragSource = function (elt, dropHandler, preview, cells,
   };
 
   // Workaround for event redirection via image tag in quirks and IE8
-  function createArrow(img, tooltip) {
+  const createArrow = (img, tooltip) => {
     var arrow = null;
 
     if (mxClient.IS_IE && !mxClient.IS_SVG) {

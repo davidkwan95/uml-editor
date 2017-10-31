@@ -18,7 +18,7 @@ JavaGenerator.prototype.generateCode = function(classAndInterfaceLists) {
 }
 
 /** ============== Generate Class Element String ================================ */
-ClassTemplateGenerator = function(className, attributesStr, methodsStr, extendsStr, implementsStr) {
+const ClassTemplateGenerator = function(className, attributesStr, methodsStr, extendsStr, implementsStr) {
   this.className = className;
   this.attributesStr = attributesStr;
   this.methodsStr = methodsStr;
@@ -37,7 +37,7 @@ ${this.methodsStr}
   }
 }
 
-InterfaceTemplateGenerator = function(interfaceName, attributesStr, methodsStr) {
+const InterfaceTemplateGenerator = function(interfaceName, attributesStr, methodsStr) {
   this.interfaceName = interfaceName;
   this.attributesStr = attributesStr;
   this.methodsStr = methodsStr;
@@ -54,7 +54,7 @@ ${this.methodsStr}
   }
 }
 
-ClassElementGeneratorFactory = function(element) {
+const ClassElementGeneratorFactory = function(element) {
   var attributesStr = JavaGenerator.prototype.generateStringAttribute(element);
   var methodsStr = JavaGenerator.prototype.generateStringMethod(element);
   var extendsStr = JavaGenerator.prototype.generateStringExtends(element);
@@ -143,9 +143,9 @@ JavaGenerator.prototype.generateStringMethod = function(element) {
 /** ============== Generate Implements List ======================================== */
 JavaGenerator.prototype.generateStringImplements = function(element) {
   var separator = ',';
-  var implements = element.implements;
-  if (implements.length) {
-      var implementString = implements.join(', ').trim();
+  var implementsList = element.implements;
+  if (implementsList.length) {
+      var implementString = implementsList.join(', ').trim();
       return ` implements ${implementString}`;
   }
   return '';

@@ -2,6 +2,7 @@ var Sidebar = require('./Sidebar');
 var Menus = require('./Menus');
 var Actions = require('./Actions');
 var Toolbar = require('./Toolbar');
+var Format = require('./Format');
 
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
@@ -9,7 +10,7 @@ var Toolbar = require('./Toolbar');
 /**
  * Constructs a new graph editor
  */
-EditorUi = function (editor, container, lightbox) {
+const EditorUi = function (editor, container, lightbox) {
   mxEventSource.call(this);
   this.destroyFunctions = [];
 

@@ -1,7 +1,7 @@
 /**
  * Adds the general palette to the sidebar.
  */
-addClassDiagramPalette = function (sb, expand) {
+const addClassDiagramPalette = function (sb, expand) {
 
   // Reusable cells
   var field = new mxCell('+ field: type', new mxGeometry(0, 0, 100, 26), 'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;');
