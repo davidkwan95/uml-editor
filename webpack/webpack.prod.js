@@ -1,6 +1,6 @@
 const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const rootPath = path.resolve(__dirname, '../');
 const outputPath = path.resolve(__dirname, '../dist');
