@@ -9,3 +9,6 @@ deploy:
   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
   on:
     branch: master
+before_deploy:
+  - sed -i '/dist/d' .gitignore
+  - sed -i '/index.html/d' .gitignore
