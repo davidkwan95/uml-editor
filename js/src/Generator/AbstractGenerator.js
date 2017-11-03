@@ -19,7 +19,6 @@ AbstractGenerator.prototype.generateAndSave = function () {
   var code = this.generateCode(this.classAndInterfaceLists);
 
   if (code) {
-    console.log('testing Travis CI');
     this.saveCode(fileName, code);
     ui.hideDialog();
   }
