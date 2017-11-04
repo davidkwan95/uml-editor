@@ -1,3 +1,4 @@
+var SourceMapDevToolPlugin = require('webpack/lib/SourceMapDevToolPlugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -10,7 +11,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.template.html',
       filename: 'index.html',
-    })
+    }),
+    new SourceMapDevToolPlugin(),
   ],
   module: {
     rules: [
