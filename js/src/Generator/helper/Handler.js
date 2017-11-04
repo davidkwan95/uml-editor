@@ -1,16 +1,20 @@
 /** Abstract class for handler */
 
-var Handler = function () {
-  this.next = {
-    handleRequest(request) {
-      console.log('All strategies exhausted');
-    }
-  };
-};
-Handler.prototype.setNext = function (next) {
-  this.next = next;
-  return next;
-};
-Handler.prototype.handleRequest = function (request) {};
+export default class Handler {
+  constructor() {
+    this.next = {
+      handleRequest: () => {
+        console.log('All strategies exhausted');
+      }
+    };
+  }
 
-module.exports = Handler;
+  setNext(next) {
+    this.next = next;
+    return next;
+  }
+
+  handleRequest() {
+    throw new Error('Method not implemented', this);
+  }
+}
