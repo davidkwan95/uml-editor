@@ -18,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-1. [Yarn](https://yarnpkg.com/en/)
+[Yarn](https://yarnpkg.com/en/)
 
 ```
 npm install -g yarn
@@ -26,19 +26,19 @@ npm install -g yarn
 
 ### Installing
 
-1. Install dependencies
+Install dependencies
 
 ```
 yarn install
 ```
 
-2. Run server
+Run development server
 
 ```
 yarn dev
 ```
 
-3. Open `localhost:8080` in browser
+Open `localhost:8080` in browser
 
 
 ## Coding style
@@ -68,7 +68,7 @@ There are ways to contribute to this project:
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details
 
 
 ## Acknowledgment
