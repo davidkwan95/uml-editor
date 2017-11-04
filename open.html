@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Open Diagram</title>
+    <link rel="stylesheet" type="text/css" href="styles/grapheditor.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<script type="text/javascript">
+
+    // Reads files locally
+    function handleFiles(files)
+    {
+        for (var i = 0; i < files.length; i++)
+        {
+            (function(file)
+            {
+                // Small hack to support import
+                if (window.parent.openNew)
+                {
+                    window.parent.open(window.parent.location.href);
+                }
+                
+                var reader = new FileReader();
+                reader.onload = function(e)
+                {
+                    window.parent.openFile.setData(e.target.result, file.name);
+                };
+                reader.onerror = function(e)
+                {
+                    console.log(e);
+                };
+                reader.readAsText(file);
+            })(files[i]);
+        }
+    };
+
+    // Handles form-submit by preparing to process response
+    function handleSubmit()
+    {
+        var form = window.openForm || document.getElementById('openForm');
+        
+        // Checks for support of the File API for local file access
+        // except for files where the parse is on the server
+        if (window.parent.Graph.fileSupport && form.upfile.files.length > 0)
+        {
+            handleFiles(form.upfile.files);
+            
+            return false;
+        }
+        else
+        {
+            if (/(\.xml)$/i.test(form.upfile.value) || /(\.txt)$/i.test(form.upfile.value) ||
+                /(\.mxe)$/i.test(form.upfile.value))
+            {
+                // Small hack to support import
+                if (window.parent.openNew)
+                {
+                    window.parent.open(window.parent.location.href);
+                }
+                
+                // NOTE: File is loaded via JS injection into the iframe, which in turn sets the
+                // file contents in the parent window. The new window asks its opener if any file
+                // contents are available or waits for the contents to become available.
+                return true;
+            }
+            else
+            {
+                window.parent.mxUtils.alert(window.parent.mxResources.get('invalidOrMissingFile'));
+                
+                return false;
+            }
+        }
+    };
+    
+    // Hides this dialog
+    function hideWindow(cancel)
+    {
+        window.parent.openFile.cancel(cancel);
+    }
+    
+    function fileChanged()
+    {
+        var form = window.openForm || document.getElementById('openForm');
+        var openButton = document.getElementById('openButton');
+        
+        if (form.upfile.value.length > 0)
+        {
+            openButton.removeAttribute('disabled');
+        }
+        else
+        {
+            openButton.setAttribute('disabled', 'disabled');
+        }       
+    }
+
+</script>
+<script type="text/javascript" src="js/Load.js"></script>
+
+<body onload="main();">
+<form method="POST" enctype="multipart/form-data" action="" name="openForm"
+    id="openForm" onsubmit="return handleSubmit();" accept-charset="UTF-8">
+<table style="width:100%;">
+<tr>
+<td style="height:40px;vertical-align:top;" colspan="2">
+<input type="file" name="upfile" onchange="fileChanged()">
+</td>
+</tr>
+<tr>
+<td colspan="2" height="120px" id="openSupported" style="font-family:arial;color:grey;font-size:9pt;vertical-align:top;text-align:left;">
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td style="vertical-align:middle;text-align:right;white-space:nowrap;">
+<input type="button" id="cancelButton" class="geBtn" value="Cancel" onclick="hideWindow(true);">
+<input type="submit" id="openButton" class="geBtn gePrimaryBtn" value="Open" disabled="disabled">
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

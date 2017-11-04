@@ -1,0 +1,53 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb-base/legacy",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "mxCell": false,
+    "mxClient":false,
+    "mxConnectionHandler": false,
+    "mxConstants": false,
+    "mxEvent": false,
+    "mxEventObject": false,
+    "mxEventSource": false,
+    "mxGeometry": false,
+    "mxHierarchicalLayout": false,
+    "mxUtils": false,
+    "mxResources": false,
+    "mxPopupMenu": false,
+    "mxPoint": false
+  },
+  "rules": {
+    // Strict mode
+    "strict": [2, "never"],
+
+    // Code style
+    "padded-blocks": 0,
+    "comma-dangle": [0, "always-multiline"],
+    "no-cond-assign": [2, "except-parens"],
+    "prefer-const": 1,
+    "no-const-assign": 2,
+    "eol-last":0,
+    "curly": 2,
+    "brace-style": [2, "1tbs", { "allowSingleLine": false }],
+    "no-nested-ternary": 1, // The no-nested-ternary rule disallows the use of nested ternary expressions.
+    "no-class-assign": 2, // Disallow modifying variables of class declarations
+    "arrow-spacing": 2,
+    "no-use-before-define": 0,
+    "object-shorthand": [2, "methods"], // Expects that the method shorthand will be used whenever possible (not key/value pair shorthands).
+    "no-multiple-empty-lines": 0,
+    "consistent-return": 0,
+    "no-console": 0,
+    "new-cap": 0,
+    "default-case": 0,
+    "no-unused-vars": 1,
+    "no-alert": 0,
+    "no-await-in-loop": 0,
+    "no-restricted-syntax": 0,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+  }
+}
